@@ -12,11 +12,13 @@ ENV HOME /root
 CMD ["/sbin/my_init"]
 
 # Mecab
+WORKDIR /
 RUN curl -O https://mecab.googlecode.com/files/mecab-0.996.tar.gz
 RUN tar -xzf mecab-0.996.tar.gz
 RUN cd mecab-0.996; ./configure --enable-utf8-only; make; make install; ldconfig
 
 # Ipadic
+WORKDIR /
 RUN curl -O https://mecab.googlecode.com/files/mecab-ipadic-2.7.0-20070801.tar.gz
 RUN tar -xzf mecab-ipadic-2.7.0-20070801.tar.gz
 RUN cd mecab-ipadic-2.7.0-20070801; ./configure --with-charset=utf8; make; make install
@@ -33,6 +35,7 @@ RUN echo "dicdir = /usr/local/lib/mecab/dic/ipadic" > /usr/local/etc/mecabrc
 # ENV FREELINGSHARE /usr/share/freeling
 
 # FreeLing from source
+WORKDIR /
 RUN apt-get update
 RUN apt-get -y install build-essential automake autoconf
 RUN apt-get -y install libboost-regex-dev libicu-dev zlib1g-dev
@@ -40,8 +43,10 @@ RUN apt-get -y install libboost-system-dev libboost-program-options-dev libboost
 #RUN curl -o freeling-3.1.tar.gz http://devel.cpl.upc.edu/freeling/downloads/32
 ADD freeling-3.1.tar.gz freeling-3.1.tar.gz
 RUN cd freeling-3.1.tar.gz/freeling-3.1; ./configure; make; make install
+ENV FREELINGSHARE /usr/local/share/freeling
 
 # Ve
+WORKDIR /
 RUN git clone https://github.com/Kimtaro/ve.git
 WORKDIR /ve
 RUN gem install bundler
