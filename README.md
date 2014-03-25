@@ -1,7 +1,7 @@
 docker-ve-server
 ================
 
-This is a Docker container to run the Ve linguistics framework with its dependencies.
+This is a Docker container to run the simple JSON API for the Ve linguistics framework.
 
 It currently only runs Mecab with Ipadic, but FreeLing English support is in the works.
 
