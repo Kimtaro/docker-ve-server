@@ -17,10 +17,16 @@ RUN tar -xzf mecab-0.996.tar.gz
 RUN cd mecab-0.996; ./configure --enable-utf8-only; make; make install; ldconfig
 
 # Ipadic
-RUN curl -O https://mecab.googlecode.com/files/mecab-ipadic-2.7.0-20070801.tar.gz
-RUN tar -xzf mecab-ipadic-2.7.0-20070801.tar.gz
-RUN cd mecab-ipadic-2.7.0-20070801; ./configure --with-charset=utf8; make; make install
-RUN echo "dicdir = /usr/local/lib/mecab/dic/ipadic" > /usr/local/etc/mecabrc
+# RUN curl -O https://mecab.googlecode.com/files/mecab-ipadic-2.7.0-20070801.tar.gz
+# RUN tar -xzf mecab-ipadic-2.7.0-20070801.tar.gz
+# RUN cd mecab-ipadic-2.7.0-20070801; ./configure --with-charset=utf8; make; make install
+# RUN echo "dicdir = /usr/local/lib/mecab/dic/ipadic" > /usr/local/etc/mecabrc
+
+# Naist-jdic
+RUN curl -L http://jaist.dl.sourceforge.jp/naist-jdic/53500/mecab-naist-jdic-0.6.3b-20111013.tar.gz -o mecab-naist-jdic-0.6.3b-20111013.tar.gz
+RUN tar -xzf  mecab-naist-jdic-0.6.3b-20111013.tar.gz
+RUN cd mecab-naist-jdic-0.6.3b-20111013; ./configure --with-charset=utf8; make; make install
+RUN echo "dicdir = /usr/local/lib/mecab/dic/naist-jdic" > /usr/local/etc/mecabrc
 
 # FreeLing
 # RUN apt-get update
