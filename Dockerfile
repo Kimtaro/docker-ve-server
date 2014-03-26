@@ -51,7 +51,7 @@ RUN echo "dicdir = /usr/local/lib/mecab/dic/naist-jdic" > /usr/local/etc/mecabrc
 
 # Ve
 RUN git clone https://github.com/Kimtaro/ve.git
-RUN cd /ve; gem install bundler; bundle install; gem build ve.gemspec; gem install ve-0.0.3.gem
+RUN cd /ve; git pull; git checkout c6ac46a1; gem install bundler; bundle install; gem build ve.gemspec; gem install ve-0.0.3.gem
 
 # Start the server
 EXPOSE 4567
