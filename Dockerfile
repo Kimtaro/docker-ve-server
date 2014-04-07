@@ -39,19 +39,18 @@ RUN echo "dicdir = /usr/local/lib/mecab/dic/naist-jdic" > /usr/local/etc/mecabrc
 # ENV FREELINGSHARE /usr/share/freeling
 
 # FreeLing from source
-# WORKDIR /
-# RUN apt-get update
-# RUN apt-get -y install build-essential automake autoconf
-# RUN apt-get -y install libboost-regex-dev libicu-dev zlib1g-dev
-# RUN apt-get -y install libboost-system-dev libboost-program-options-dev libboost-thread-dev
-# #RUN curl -o freeling-3.1.tar.gz http://devel.cpl.upc.edu/freeling/downloads/32
-# ADD freeling-3.1.tar.gz freeling-3.1.tar.gz
-# RUN cd freeling-3.1.tar.gz/freeling-3.1; ./configure; make; make install
-# ENV FREELINGSHARE /usr/local/share/freeling
+RUN apt-get update
+RUN apt-get -y install build-essential automake autoconf
+RUN apt-get -y install libboost-regex-dev libicu-dev zlib1g-dev
+RUN apt-get -y install libboost-system-dev libboost-program-options-dev libboost-thread-dev
+#RUN curl -o freeling-3.1.tar.gz http://devel.cpl.upc.edu/freeling/downloads/32
+ADD freeling-3.1.tar.gz freeling-3.1.tar.gz
+RUN cd freeling-3.1.tar.gz/freeling-3.1; ./configure; make; make install
+ENV FREELINGSHARE /usr/local/share/freeling
 
 # Ve
 RUN git clone https://github.com/Kimtaro/ve.git
-RUN cd /ve; git pull; git checkout c6ac46a1; gem install bundler; bundle install; gem build ve.gemspec; gem install ve-0.0.3.gem
+RUN cd /ve; git pull; git checkout e80051d; gem install bundler; bundle install; gem build ve.gemspec; gem install ve-0.0.3.gem
 
 # Start the server
 EXPOSE 4567
@@ -59,10 +58,10 @@ RUN mkdir /etc/service/ve
 ADD ve.sh /etc/service/ve/run
 
 # Clean up
-RUN apt-get remove -y build-essential
+#RUN apt-get remove -y build-essential
 RUN rm -rf mecab-0.996.tar.gz*
 RUN rm -rf mecab-ipadic-2.7.0-20070801*
-RUN rm -rf freeling-*
+#RUN rm -rf freeling-*
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
